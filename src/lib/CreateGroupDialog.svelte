@@ -3,12 +3,24 @@
 	import Button, { Label } from '@smui/button';
 	import Textfield from '@smui/textfield';
 	import { PLACEHOLDER_GROUP_NAME } from './_modules/constants';
+	import Select, { Option } from '@smui/select';
+	import { CURRENCY_SYMBOLS } from './_modules/constants'
 
 	export let openDialog = false;
 	export let addCallback: Function = () => {};
 
 	let inputName: string = '';
+
+	let options: string[] = Object.keys(CURRENCY_SYMBOLS)
+	let currency: string= 'USD'
 </script>
+
+<style>
+	:global(.menu-hack) {
+		max-width: 300px;
+	}
+</style>
+
 
 <Dialog
 	bind:open={openDialog}
@@ -17,8 +29,18 @@
 >
 	<Title id="default-focus-title">✨ create a new group</Title>
 	<Content id="default-focus-content">
-		please enter your groups name:
-		<Textfield bind:value={inputName} />
+		<div>
+			please enter your group's name:
+			<Textfield bind:value={inputName} />
+		</div>
+
+		<div style="position: relative;">
+			<Select bind:value={currency} label="Currency" menu$fixed={true} menu$class={"menu-hack"}>
+				{#each options as option}
+					<Option value={option}>{option} {CURRENCY_SYMBOLS[option]}</Option>
+				{/each}
+			</Select>
+		</div>
 	</Content>
 	<Actions>
 		<Button>
@@ -28,7 +50,7 @@
 			variant="unelevated"
 			disabled={inputName === '' || inputName === PLACEHOLDER_GROUP_NAME}
 			on:click={() => {
-				addCallback(inputName);
+				addCallback(inputName, currency);
 				inputName = '';
 			}}
 		>

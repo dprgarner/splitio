@@ -31,14 +31,14 @@
 		if (!SEA) SEA = getSEA();
 	};
 
-	const createGroup = async (groupName: string) => {
+	const createGroup = async (groupName: string, currency: string) => {
 		showLoadingSpinner = true;
 		const pair = await SEA.pair();
 		const result = appDB.set({ expenses: {}, members: {}, groupInfo: {}, pubKey: pair?.pub });
 		const secretKey = '#' + pair.priv;
 		const nodeid = result._.has;
 		let infoNode = appDB.get(nodeid).get('groupInfo');
-		putSecure(infoNode, { name: groupName }, secretKey, (ack) => {
+		putSecure(infoNode, { name: groupName, currency }, secretKey, (ack) => {
 			if (!ack.err) {
 				redirectToGroup(nodeid, secretKey);
 			} else {

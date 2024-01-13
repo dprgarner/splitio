@@ -7,6 +7,7 @@
 
 	export let openDialog = false;
 	export let transaction = {};
+	export let currency: string;
 </script>
 
 <Dialog
@@ -17,7 +18,7 @@
 	<Title id="default-focus-title">⚠️ delete transaction?</Title>
 	<Content id="default-focus-content">
 		<List twoLine avatarList>
-			<TransactionListItem {transaction} />
+			<TransactionListItem {transaction} {currency} />
 		</List>
 		<p>this will delete the selected transaction from the group. continue?</p>
 	</Content>

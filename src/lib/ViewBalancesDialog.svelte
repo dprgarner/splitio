@@ -11,6 +11,7 @@
 	export let membersList: Array<Array<string | object>> = [];
 	export let expensesObj: object = {};
 	export let paymentsObj: object = {};
+	export let currency: string;
 
 	const initExpMembers = (membersList) => {
 		let result = {};
@@ -60,12 +61,14 @@
 					isExpanded={expandedMembers[payerName]}
 					{payerName}
 					{amount}
+					{currency}
 					onClickCallback={() => toggleDebtsForMember(payerName)}
 				/>
 				{#if expandedMembers[payerName]}
 					<PaymentsList
 						showRecordPaymentCallback={showRecordPaymentDialog}
 						pendingPayments={payments[payerName]}
+						{currency}
 						{payerName}
 					/>
 				{/if}
@@ -78,6 +81,7 @@
 		bind:openDialog={openRecordPayment}
 		{receiverName}
 		{debtAmount}
+		{currency}
 		{payerName}
 	/>
 </Dialog>

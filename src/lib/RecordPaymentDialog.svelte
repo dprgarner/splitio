@@ -4,11 +4,13 @@
 	import { absRounded, getMemberAvatarURL } from './_modules/utils';
 	import List, { Item, Text, PrimaryText, SecondaryText, Graphic } from '@smui/list';
 	import { recordPayment } from './_modules/money';
+	import { CURRENCY_SYMBOLS } from './_modules/constants'
 
 	export let openDialog = false;
 	export let payerName: string = '';
 	export let receiverName: string = '';
 	export let debtAmount: number = 0.0;
+	export let currency: string;
 	$: absAmount = Math.abs(debtAmount);
 	$: roundedDebt = +absRounded(debtAmount);
 </script>
@@ -29,7 +31,7 @@
 						{payerName} <span style="color: gray">pays to</span>
 						{receiverName}
 					</PrimaryText>
-					<SecondaryText class="success-text">${roundedDebt}</SecondaryText>
+					<SecondaryText class="success-text">{CURRENCY_SYMBOLS[currency]}{roundedDebt}</SecondaryText>
 				</Text>
 				<Graphic
 					style="margin-left: auto;
@@ -38,7 +40,7 @@
 				/>
 			</Item>
 		</List>
-		<p>this will record a payment of ${roundedDebt} in the group</p>
+		<p>this will record a payment of {CURRENCY_SYMBOLS[currency]}{roundedDebt} in the group</p>
 	</Content>
 	<Actions>
 		<Button use={[InitialFocus]}>

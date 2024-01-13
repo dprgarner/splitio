@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { Item, Graphic, Text, PrimaryText, SecondaryText, Meta } from '@smui/list';
 	import { absRounded, timestampToShortDate } from './_modules/utils';
+	import { CURRENCY_SYMBOLS } from './_modules/constants'
 
 	export let transaction = {};
 	export let onDeleteCallback: Function | undefined = undefined;
+	export let currency: string;
 
 	$: isSettlement = transaction.title === undefined;
 </script>
@@ -16,12 +18,12 @@
 		{#if !isSettlement}
 			<Text>
 				<PrimaryText>{transaction.title}</PrimaryText>
-				<SecondaryText>${transaction.amount} by {transaction.paidBy}</SecondaryText>
+				<SecondaryText>{CURRENCY_SYMBOLS[currency]}{transaction.amount} by {transaction.paidBy}</SecondaryText>
 			</Text>
 		{:else}
 			<Text>
 				<PrimaryText>{`💵 paid to ${transaction.receivedBy}`}</PrimaryText>
-				<SecondaryText>${absRounded(transaction.amount)} from {transaction.paidBy}</SecondaryText>
+				<SecondaryText>{CURRENCY_SYMBOLS[currency]}{absRounded(transaction.amount)} from {transaction.paidBy}</SecondaryText>
 			</Text>
 		{/if}
 		{#if onDeleteCallback}

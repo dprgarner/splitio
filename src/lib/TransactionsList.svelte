@@ -5,6 +5,7 @@
 	import { TRANSACTIONS_INC_MAX_SHOW, TRANSACTIONS_INITIAL_MAX_SHOW } from './_modules/constants';
 
 	export let transactions = [];
+	export let currency: string;
 
 	let maxShownTx = TRANSACTIONS_INITIAL_MAX_SHOW;
 
@@ -16,6 +17,7 @@
 	{#each transactions.slice(0, maxShownTx) as [key, transaction]}
 		<TransactionListItem
 			{transaction}
+			{currency}
 			onDeleteCallback={() => {
 				confirmDeleteTx = transaction;
 				confirmDeleteTx.key = key;
@@ -47,4 +49,4 @@
 	{/if}
 </List>
 
-<ConfirmDeleteTxDialog bind:openDialog={openConfirmDeleteDialog} transaction={confirmDeleteTx} />
+<ConfirmDeleteTxDialog bind:openDialog={openConfirmDeleteDialog} transaction={confirmDeleteTx} {currency} />

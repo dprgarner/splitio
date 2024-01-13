@@ -7,10 +7,12 @@
 	import Icon from '@smui/select/icon';
 	import { Graphic } from '@smui/list';
 	import { getMemberAvatarURL } from './_modules/utils';
+	import { CURRENCY_SYMBOLS } from './_modules/constants'
 
 	export let openDialog = false;
 	export let addCallback: Function = () => {};
 	export let membersList: Array<Array<string | object>> = [];
+	export let currency: string;
 
 	let inputName: string = '';
 	let inputAmount: number = 0.0;
@@ -30,7 +32,7 @@
 				<Textfield bind:value={inputName} />
 			</Cell>
 			<Cell span={12}>
-				enter the $ amount:
+				enter the {CURRENCY_SYMBOLS[currency]} amount:
 				<Textfield type="number" bind:value={inputAmount} />
 			</Cell>
 			<Cell span={12}>

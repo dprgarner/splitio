@@ -122,6 +122,7 @@
 			$secretKey,
 			(plain, key) => {
 				$groupStore.groupInfo.name = plain.name;
+				$groupStore.groupInfo.currency = plain.currency;
 				storeRecentGroup(GROUPID, $secretKey, plain.name);
 			},
 			(key) => {
@@ -173,7 +174,7 @@
 
 	const putGroupNotes = (noteValue: string, onCompletion: Function) => {
 		let node = $groupDB.get('groupNotes');
-		if (!noteValue) deleteSecure(node, onCompletion)
+		if (!noteValue) deleteSecure(node, onCompletion);
 		else putSecure(node, noteValue, $secretKey, onCompletion);
 	};
 
@@ -181,6 +182,8 @@
 		(a, b) => b[1].timestamp - a[1].timestamp
 	);
 	$: members = Object.entries($groupStore.members);
+
+	$: currency = $groupStore.groupInfo.currency || 'USD'
 </script>
 
 <SvelteSeo
@@ -220,7 +223,7 @@
 
 <div class="mdc-typography--headline5">💸 group transactions</div>
 
-<TransactionsList {transactions} />
+<TransactionsList {transactions} {currency} />
 
 <div class="mdc-typography--headline5">🤝 members</div>
 
@@ -258,6 +261,7 @@
 <!-- add expense dialog -->
 <AddExpenseDialog
 	membersList={members}
+	{currency}
 	bind:openDialog={openAddExpenseDialog}
 	addCallback={addExpense}
 />
@@ -267,14 +271,12 @@
 	expensesObj={$groupStore.expenses}
 	paymentsObj={$groupStore.payments}
 	membersList={members}
+	{currency}
 />
 
 <SyncIssuesDialog bind:openDialog={openSyncIssuesDialog} />
 
-<GroupNotesDialog
-	bind:openDialog={openGroupNotesDialog}
-	putNotesCallback={putGroupNotes}
-/>
+<GroupNotesDialog bind:openDialog={openGroupNotesDialog} putNotesCallback={putGroupNotes} />
 
 <Snackbar bind:this={copiedLinkSnackbar}>
 	<Label>📋 link copied to clipboard, now share it!</Label>

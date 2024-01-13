@@ -86,6 +86,7 @@
 			$secretKey,
 			(plain, key) => {
 				$groupStore.groupInfo.name = plain.name;
+				$groupStore.groupInfo.currency = plain.currency;
 			},
 			(key) => {
 				delete $groupStore.groupInfo[key];
