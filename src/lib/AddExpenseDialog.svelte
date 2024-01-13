@@ -58,7 +58,7 @@
 		</Button>
 		<Button
 			variant="unelevated"
-			disabled={inputName === '' || inputAmount === 0.0 || inputPaidBy === ''}
+			disabled={inputName === '' || isNaN(inputAmount) || inputAmount <= 0.0 || inputPaidBy === ''}
 			on:click={() => {
 				addCallback(inputName, inputAmount, inputPaidBy);
 				inputName = '';
