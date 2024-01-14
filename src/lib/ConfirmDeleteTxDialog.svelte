@@ -18,24 +18,26 @@
 	aria-labelledby="default-focus-title"
 	aria-describedby="default-focus-content"
 >
-	<Title id="default-focus-title">⚠️ delete transaction?</Title>
-	<Content id="default-focus-content">
-		<List twoLine avatarList>
-			<TransactionListItem {transaction} {currency} />
-		</List>
-		<p>this will delete the selected transaction from the group. continue?</p>
-	</Content>
-	<Actions>
-		<Button use={[InitialFocus]}>
-			<Label>cancel</Label>
-		</Button>
-		<Button
-			variant="unelevated"
-			on:click={() => {
-				removeTransaction(transactionKey, transaction);
-			}}
-		>
-			<Label>delete</Label>
-		</Button>
-	</Actions>
+	{#if transaction }
+		<Title id="default-focus-title">⚠️ delete transaction?</Title>
+		<Content id="default-focus-content">
+			<List twoLine avatarList>
+				<TransactionListItem {transaction} {currency} />
+			</List>
+			<p>this will delete the selected transaction from the group. continue?</p>
+		</Content>
+		<Actions>
+			<Button use={[InitialFocus]}>
+				<Label>cancel</Label>
+			</Button>
+			<Button
+				variant="unelevated"
+				on:click={() => {
+					removeTransaction(transactionKey, transaction);
+				}}
+			>
+				<Label>delete</Label>
+			</Button>
+		</Actions>
+	{/if}
 </Dialog>
