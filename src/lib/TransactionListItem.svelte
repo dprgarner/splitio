@@ -5,7 +5,7 @@
 	import type { Transaction } from './_modules/types'
 
 	export let transaction: Transaction;
-	export let onDeleteCallback: () => void;
+	export let onDeleteCallback: (() => void) | undefined = undefined;
 	export let currency: string;
 
 	$: isSettlement = !('title' in transaction && transaction.title);
