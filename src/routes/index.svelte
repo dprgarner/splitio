@@ -11,6 +11,7 @@
 	import type { IGunStaticSEA } from 'gun/types/static/sea';
 	import LoadingSpinnerOverlay from '$lib/LoadingSpinnerOverlay.svelte';
 	import RecentGroupsList from '$lib/RecentGroupsList.svelte';
+	import type { Currency } from '$lib/_modules/types'
 
 	let groupValue = '';
 	let openCreateGroupDialog: boolean = false;
@@ -31,7 +32,7 @@
 		if (!SEA) SEA = getSEA();
 	};
 
-	const createGroup = async (groupName: string, currency: string) => {
+	const createGroup = async (groupName: string, currency: Currency) => {
 		showLoadingSpinner = true;
 		const pair = await SEA.pair();
 		const result = appDB.set({ expenses: {}, members: {}, groupInfo: {}, pubKey: pair?.pub });

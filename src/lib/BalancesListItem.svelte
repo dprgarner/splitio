@@ -2,12 +2,13 @@
 	import { Item, Text, PrimaryText, SecondaryText, Meta, Graphic } from '@smui/list';
 	import { absRounded, getMemberAvatarURL } from './_modules/utils';
 	import { CURRENCY_SYMBOLS } from './_modules/constants'
+	import type { Currency } from './_modules/types'
 
 	export let payerName: string;
 	export let amount: number;
 	export let isExpanded: boolean;
 	export let onClickCallback: () => void;
-	export let currency: string;
+	export let currency: Currency;
 </script>
 
 <Item on:click={onClickCallback}>

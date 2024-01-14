@@ -5,14 +5,15 @@
 	import { PLACEHOLDER_GROUP_NAME } from './_modules/constants';
 	import Select, { Option } from '@smui/select';
 	import { CURRENCY_SYMBOLS } from './_modules/constants'
+	import type { Currency } from './_modules/types'
 
 	export let openDialog: boolean;
-	export let addCallback: (name: string, currency: string) => void;
+	export let addCallback: (name: string, currency: Currency) => void;
 
 	let inputName: string;
 
-	let options: string[] = Object.keys(CURRENCY_SYMBOLS)
-	let currency: string = 'USD'
+	let options = Object.keys(CURRENCY_SYMBOLS) as Currency[]
+	let currency: Currency = 'USD'
 </script>
 
 <style>

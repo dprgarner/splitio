@@ -1,3 +1,7 @@
+import type { CURRENCY_SYMBOLS } from './constants'
+
+export type Currency = keyof typeof CURRENCY_SYMBOLS
+
 export enum GroupNodeState {
 	Found = "FOUND",
 	Unknown = "UNKNOWN",
@@ -27,7 +31,7 @@ export type Member = {
 
 export type GroupInfo = {
 	name: string;
-	currency?: string;
+	currency?: Currency;
 }
 
 export type GroupStore = {

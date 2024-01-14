@@ -5,12 +5,13 @@
 	import List, { Item, Text, PrimaryText, SecondaryText, Graphic } from '@smui/list';
 	import { recordPayment } from './_modules/money';
 	import { CURRENCY_SYMBOLS } from './_modules/constants'
+	import type { Currency } from './_modules/types'
 
 	export let openDialog: boolean;
 	export let payerName: string;
 	export let receiverName: string;
 	export let debtAmount: number;
-	export let currency: string;
+	export let currency: Currency;
 	$: absAmount = Math.abs(debtAmount);
 	$: roundedDebt = +absRounded(debtAmount);
 </script>

@@ -2,11 +2,11 @@
 	import { Item, Graphic, Text, PrimaryText, SecondaryText, Meta } from '@smui/list';
 	import { absRounded, timestampToShortDate } from './_modules/utils';
 	import { CURRENCY_SYMBOLS } from './_modules/constants'
-	import type { Transaction } from './_modules/types'
+	import type { Transaction, Currency } from './_modules/types'
 
 	export let transaction: Transaction;
 	export let onDeleteCallback: (() => void) | undefined = undefined;
-	export let currency: string;
+	export let currency: Currency;
 
 	$: isSettlement = !('title' in transaction && transaction.title);
 </script>

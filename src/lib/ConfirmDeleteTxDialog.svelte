@@ -5,11 +5,12 @@
 	import TransactionListItem from './TransactionListItem.svelte';
 	import { removeTransaction } from './_modules/money';
 	import type { Transaction } from './_modules/types'
+	import type { Currency } from './_modules/types'
 
 	export let openDialog: boolean;
 	export let transaction: Transaction;
 	export let transactionKey: string;
-	export let currency: string;
+	export let currency: Currency;
 </script>
 
 <Dialog

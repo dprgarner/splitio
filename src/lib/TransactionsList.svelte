@@ -3,10 +3,10 @@
 	import ConfirmDeleteTxDialog from './ConfirmDeleteTxDialog.svelte';
 	import TransactionListItem from './TransactionListItem.svelte';
 	import { TRANSACTIONS_INC_MAX_SHOW, TRANSACTIONS_INITIAL_MAX_SHOW } from './_modules/constants';
-	import type { Transaction } from './_modules/types'
+	import type { Currency, Transaction } from './_modules/types'
 
 	export let transactions: Array<[string, Transaction]>;
-	export let currency: string;
+	export let currency: Currency;
 
 	let maxShownTx = TRANSACTIONS_INITIAL_MAX_SHOW;
 
