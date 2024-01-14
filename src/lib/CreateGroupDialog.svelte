@@ -6,13 +6,13 @@
 	import Select, { Option } from '@smui/select';
 	import { CURRENCY_SYMBOLS } from './_modules/constants'
 
-	export let openDialog = false;
-	export let addCallback: Function = () => {};
+	export let openDialog: boolean;
+	export let addCallback: (name: string, currency: string) => void;
 
-	let inputName: string = '';
+	let inputName: string;
 
 	let options: string[] = Object.keys(CURRENCY_SYMBOLS)
-	let currency: string= 'USD'
+	let currency: string = 'USD'
 </script>
 
 <style>

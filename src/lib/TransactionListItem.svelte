@@ -2,12 +2,13 @@
 	import { Item, Graphic, Text, PrimaryText, SecondaryText, Meta } from '@smui/list';
 	import { absRounded, timestampToShortDate } from './_modules/utils';
 	import { CURRENCY_SYMBOLS } from './_modules/constants'
+	import type { Transaction } from './_modules/types'
 
-	export let transaction = {};
-	export let onDeleteCallback: Function | undefined = undefined;
+	export let transaction: Transaction;
+	export let onDeleteCallback: () => void;
 	export let currency: string;
 
-	$: isSettlement = transaction.title === undefined;
+	$: isSettlement = !('title' in transaction && transaction.title);
 </script>
 
 <div>
@@ -15,7 +16,7 @@
 		<Graphic style="text-align: center; width: 1.75rem;">
 			{timestampToShortDate(transaction.timestamp)}
 		</Graphic>
-		{#if !isSettlement}
+		{#if 'title' in transaction}
 			<Text>
 				<PrimaryText>{transaction.title}</PrimaryText>
 				<SecondaryText>{CURRENCY_SYMBOLS[currency]}{transaction.amount} by {transaction.paidBy}</SecondaryText>

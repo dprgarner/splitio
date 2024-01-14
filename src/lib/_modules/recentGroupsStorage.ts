@@ -1,7 +1,8 @@
 import { MAX_RECENT_GROUPS_AMNT, RECENT_GROUPS_KEY } from "./constants";
+import type { RecentGroup } from "./types";
 
 export function storeRecentGroup(groupId: string, secretKey: string, groupName: string) {
-    let recentGroups: object[] = getRecentGroups();
+    let recentGroups: RecentGroup[] = getRecentGroups();
     let otherGroups = recentGroups.filter(
         (value) => (value.groupId !== groupId)
     );
@@ -10,11 +11,11 @@ export function storeRecentGroup(groupId: string, secretKey: string, groupName: 
     storeAllRecentGroups(otherGroups);
 }
 
-export function getRecentGroups(): object[] {
+export function getRecentGroups(): RecentGroup[] {
     return JSON.parse(localStorage.getItem(RECENT_GROUPS_KEY) || '[]')
 }
 
-function storeAllRecentGroups(recentGroups: object[]) {
+function storeAllRecentGroups(recentGroups: RecentGroup[]) {
     localStorage.setItem(RECENT_GROUPS_KEY, JSON.stringify(recentGroups));
 }
 
@@ -23,3 +24,4 @@ function storeAllRecentGroups(recentGroups: object[]) {
 //         && oldGroup.secretKey === newSecretKey
 //         && oldGroup.groupName === newGroupName;
 // }
+

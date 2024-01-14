@@ -3,8 +3,8 @@
 	import Button, { Label } from '@smui/button';
 	import Textfield from '@smui/textfield';
 
-	export let openDialog = false;
-	export let addCallback: Function = () => {};
+	export let openDialog: boolean;
+	export let addCallback: (name: string) => void;
 
 	let inputName: string = '';
 </script>

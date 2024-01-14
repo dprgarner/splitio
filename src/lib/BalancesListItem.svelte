@@ -3,10 +3,10 @@
 	import { absRounded, getMemberAvatarURL } from './_modules/utils';
 	import { CURRENCY_SYMBOLS } from './_modules/constants'
 
-	export let payerName = '';
-	export let amount = 0.0;
-	export let isExpanded = false;
-	export let onClickCallback = () => {};
+	export let payerName: string;
+	export let amount: number;
+	export let isExpanded: boolean;
+	export let onClickCallback: () => void;
 	export let currency: string;
 </script>
 

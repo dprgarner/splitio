@@ -3,9 +3,9 @@
 	import { absRounded, getMemberAvatarURL } from './_modules/utils';
 	import { CURRENCY_SYMBOLS } from './_modules/constants'
 
-	export let pendingPayments: Array<any> = [];
-	export let payerName = '';
-	export let showRecordPaymentCallback: Function;
+	export let pendingPayments: Array<[string, number]>;
+	export let payerName: string;
+	export let showRecordPaymentCallback: (rcvrName: string, debtAmnt: number, pyrName: string) => void;
 	export let currency: string;
 </script>
 

@@ -4,9 +4,11 @@
 	import List from '@smui/list';
 	import TransactionListItem from './TransactionListItem.svelte';
 	import { removeTransaction } from './_modules/money';
+	import type { Transaction } from './_modules/types'
 
-	export let openDialog = false;
-	export let transaction = {};
+	export let openDialog: boolean;
+	export let transaction: Transaction;
+	export let transactionKey: string;
 	export let currency: string;
 </script>
 
@@ -29,7 +31,7 @@
 		<Button
 			variant="unelevated"
 			on:click={() => {
-				removeTransaction(transaction.key, transaction);
+				removeTransaction(transactionKey, transaction);
 			}}
 		>
 			<Label>delete</Label>

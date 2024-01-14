@@ -8,10 +8,11 @@
 	import { Graphic } from '@smui/list';
 	import { getMemberAvatarURL } from './_modules/utils';
 	import { CURRENCY_SYMBOLS } from './_modules/constants'
+	import type { Member } from '$lib/_modules/types';
 
-	export let openDialog = false;
-	export let addCallback: Function = () => {};
-	export let membersList: Array<Array<string | object>> = [];
+	export let openDialog: boolean;
+	export let addCallback: (name: string, amount: number, paidBy: string) => void;
+	export let membersList: Array<[string, Member]>;
 	export let currency: string;
 
 	let inputName: string = '';

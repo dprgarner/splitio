@@ -1,6 +1,6 @@
 <script lang="ts">
 	import CircularProgress from '@smui/circular-progress/CircularProgress.svelte';
-	export let showOverlay = false;
+	export let showOverlay: boolean;
 </script>
 
 <!-- Loading overlay -->

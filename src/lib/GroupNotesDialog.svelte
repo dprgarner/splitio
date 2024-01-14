@@ -8,8 +8,8 @@
 	import SvelteMarkdown from 'svelte-markdown';
 	import HelperText from '@smui/textfield/helper-text';
 
-	export let openDialog = false;
-	export let putNotesCallback: Function = () => {};
+	export let openDialog: boolean;
+	export let putNotesCallback: (notes: string, cb: () => void) => void;
 
 	let editNotesValue = '';
 	let isEditMode = false;
@@ -17,10 +17,9 @@
 
 	const submitNotes = () => {
 		isSaving = true;
-		putNotesCallback(editNotesValue, (args) => {
+		putNotesCallback(editNotesValue, () => {
 			isEditMode = false;
 			isSaving = false;
-			// console.log(args);
 		});
 	};
 </script>

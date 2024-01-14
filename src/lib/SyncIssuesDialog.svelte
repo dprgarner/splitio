@@ -3,7 +3,7 @@
 
 	import Dialog, { Header, Title, Content, Actions } from '@smui/dialog';
 
-	export let openDialog = false;
+	export let openDialog: boolean;
 </script>
 
 <Dialog

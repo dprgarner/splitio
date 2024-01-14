@@ -6,10 +6,10 @@
 	import { recordPayment } from './_modules/money';
 	import { CURRENCY_SYMBOLS } from './_modules/constants'
 
-	export let openDialog = false;
-	export let payerName: string = '';
-	export let receiverName: string = '';
-	export let debtAmount: number = 0.0;
+	export let openDialog: boolean;
+	export let payerName: string;
+	export let receiverName: string;
+	export let debtAmount: number;
 	export let currency: string;
 	$: absAmount = Math.abs(debtAmount);
 	$: roundedDebt = +absRounded(debtAmount);

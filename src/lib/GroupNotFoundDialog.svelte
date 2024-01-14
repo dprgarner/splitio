@@ -2,10 +2,10 @@
 	import { goto } from '$app/navigation';
 	import Button, { Label } from '@smui/button';
 	import Dialog, { Header, Title, Content, Actions } from '@smui/dialog';
-	import { GroupNodeStates } from './_modules/types';
+	import { GroupNodeState } from './_modules/types';
 
-	export let groupNodeState = GroupNodeStates.Unknown;
-	$: notFound = groupNodeState === GroupNodeStates.NotFound;
+	export let groupNodeState: GroupNodeState;
+	$: notFound = groupNodeState === GroupNodeState.NotFound;
 </script>
 
 <svelte:head>
@@ -26,7 +26,7 @@
 	</Header>
 	<Content id="default-focus-content" class="mdc-typography--body1" style="white-space: pre-line;">
 		couldn't find group, please check the URL is correct.
-		
+
 		if this group exists, please ask a friend to open this URL at the same time to refresh the info.
 	</Content>
 	<Actions>

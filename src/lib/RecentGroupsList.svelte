@@ -5,8 +5,9 @@
 	import { onMount } from 'svelte';
 	import { redirectToGroup } from './_modules/utils';
 	import { slide } from 'svelte/transition';
+	import type { RecentGroup } from './_modules/types';
 
-	let recentGroups: object[] = [];
+	let recentGroups: RecentGroup[];
 	onMount(() => {
 		recentGroups = getRecentGroups();
 	});

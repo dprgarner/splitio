@@ -16,10 +16,6 @@ export function getMemberAvatarURL(memberName: string, size: number = 40) {
         }?colors=4DAB8C,542638,8F244D,C9306B,E86F9E`;
 }
 
-export function getExpenseTimestamp(expenseObject: any) {
-    return GUN.state.is(expenseObject, 'amount'); // get the internal timestamp for the amount property.
-}
-
 export function absRounded(num: number): string {
     return Math.abs(num).toFixed(2);
 }

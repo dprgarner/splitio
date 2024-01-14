@@ -1,8 +1,7 @@
-<script context="module">
-	/**
-	 * @type {import('@sveltejs/kit').Load}
-	 */
-	export async function load({ page }) {
+<script lang="ts" context="module">
+	import type { LoadInput } from '@sveltejs/kit'
+
+	export async function load({ page }: LoadInput<{ groupid: string }>) {
 		return {
 			props: {
 				groupId: page.params.groupid
@@ -30,7 +29,8 @@
 	import SyncIssuesDialog from '$lib/SyncIssuesDialog.svelte';
 	import TransactionsList from '$lib/TransactionsList.svelte';
 	import { PLACEHOLDER_GROUP_NAME } from '$lib/_modules/constants';
-	import { GroupNodeStates } from '$lib/_modules/types';
+	import { GroupNodeState } from '$lib/_modules/types';
+	import type { Expense, Payment, Member, GroupInfo } from '$lib/_modules/types';
 	import GroupNotFoundDialog from '$lib/GroupNotFoundDialog.svelte';
 	import GroupNotesDialog from '$lib/GroupNotesDialog.svelte';
 
@@ -43,7 +43,7 @@
 	let openGroupNotesDialog: boolean = false;
 	let copiedLinkSnackbar: SnackbarComponentDev;
 
-	let groupNodeState = GroupNodeStates.Unknown;
+	let groupNodeState = GroupNodeState.Unknown;
 
 	let chips = [
 		{
@@ -91,8 +91,8 @@
 		// detect group not found
 		$groupDB.once(
 			(val) => {
-				if (val === undefined) groupNodeState = GroupNodeStates.NotFound;
-				else groupNodeState = GroupNodeStates.Found;
+				if (val === undefined) groupNodeState = GroupNodeState.NotFound;
+				else groupNodeState = GroupNodeState.Found;
 			},
 			{ wait: 5000 }
 		);
@@ -100,8 +100,8 @@
 		onSecure(
 			$groupDB.get('expenses').map(),
 			$secretKey,
-			(plain, key) => ($groupStore.expenses[key] = plain),
-			(key) => {
+			(plain: Expense, key: string) => ($groupStore.expenses[key] = plain),
+			(key: string) => {
 				delete $groupStore.expenses[key];
 				$groupStore.expenses = $groupStore.expenses;
 			}
@@ -110,8 +110,8 @@
 		onSecure(
 			$groupDB.get('members').map(),
 			$secretKey,
-			(plain, key) => ($groupStore.members[plain.name] = plain),
-			(key) => {
+			(plain: Member, key: string) => ($groupStore.members[plain.name] = plain),
+			(key: string) => {
 				delete $groupStore.members[key];
 				$groupStore.members = $groupStore.members;
 			}
@@ -120,12 +120,12 @@
 		onSecure(
 			$groupDB.get('groupInfo'),
 			$secretKey,
-			(plain, key) => {
+			(plain: GroupInfo, key: keyof GroupInfo) => {
 				$groupStore.groupInfo.name = plain.name;
 				$groupStore.groupInfo.currency = plain.currency;
 				storeRecentGroup(GROUPID, $secretKey, plain.name);
 			},
-			(key) => {
+			(key: keyof GroupInfo) => {
 				delete $groupStore.groupInfo[key];
 				$groupStore.groupInfo = $groupStore.groupInfo;
 			}
@@ -134,8 +134,8 @@
 		onSecure(
 			$groupDB.get('payments').map(),
 			$secretKey,
-			(plain, key) => ($groupStore.payments[key] = plain),
-			(key) => {
+			(plain: Payment, key: string) => ($groupStore.payments[key] = plain),
+			(key: string) => {
 				delete $groupStore.payments[key];
 				$groupStore.payments = $groupStore.payments;
 			}
@@ -144,10 +144,10 @@
 		onSecure(
 			$groupDB.get('groupNotes'),
 			$secretKey,
-			(plain, key) => {
+			(plain: string, key: string) => {
 				$groupStore.groupNotes = plain;
 			},
-			(key) => {
+			(key: string) => {
 				$groupStore.groupNotes = '';
 			}
 		);
@@ -157,7 +157,7 @@
 		const memberExists = memberName in $groupStore.members;
 		if (!memberExists) throw SyntaxError;
 		setSecure(
-			$groupDB.get('expenses'),
+			$groupDB!.get('expenses'),
 			{
 				title: expenseName,
 				amount: expenseAmount,
@@ -169,11 +169,11 @@
 	};
 
 	const addMember = (memberName: string) => {
-		setSecure($groupDB.get('members'), { name: memberName }, $secretKey);
+		setSecure($groupDB!.get('members'), { name: memberName }, $secretKey);
 	};
 
 	const putGroupNotes = (noteValue: string, onCompletion: Function) => {
-		let node = $groupDB.get('groupNotes');
+		let node = $groupDB!.get('groupNotes');
 		if (!noteValue) deleteSecure(node, onCompletion);
 		else putSecure(node, noteValue, $secretKey, onCompletion);
 	};

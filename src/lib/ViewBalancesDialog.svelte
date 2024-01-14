@@ -6,15 +6,16 @@
 	import PaymentsList from './PaymentsList.svelte';
 	import RecordPaymentDialog from './RecordPaymentDialog.svelte';
 	import { computeBalances, computePayments } from './_modules/money';
+	import type { Expense, Payment, Member } from '$lib/_modules/types';
 
 	export let openDialog = false;
-	export let membersList: Array<Array<string | object>> = [];
-	export let expensesObj: object = {};
-	export let paymentsObj: object = {};
+	export let membersList: Array<[string, Member]>;
+	export let expensesObj: Record<string, Expense>;
+	export let paymentsObj: Record<string, Payment>;
 	export let currency: string;
 
-	const initExpMembers = (membersList) => {
-		let result = {};
+	const initExpMembers = (membersList: Array<[string, Member]>) => {
+		let result: Record<string, boolean> = {};
 		for (const member of membersList) {
 			result[member[0]] = false;
 		}

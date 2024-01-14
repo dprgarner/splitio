@@ -1,8 +1,13 @@
 import { get } from "svelte/store";
 import { setSecure } from "./secure";
+import type { Expense, Payment, Transaction, Member } from '$lib/_modules/types';
 import { groupDB, groupStore, secretKey } from "./stores";
 
-export function computeBalances(allExpensesObject, allMembers, allDonePaymentsObject) {
+export function computeBalances(
+	allExpensesObject: Record<string, Expense>,
+	allMembers: Array<[string, Member]>,
+	allDonePaymentsObject: Record<string, Payment>
+): Array<[string, number]> {
     let allExpenses = Object.entries(allExpensesObject);
     let allDonePayments = Object.entries(allDonePaymentsObject);
     if (!allExpenses || allMembers.length === 0)
@@ -10,8 +15,8 @@ export function computeBalances(allExpensesObject, allMembers, allDonePaymentsOb
 
     let total = allExpenses.map((x) => x[1].amount).reduce((a, b) => a + b, 0);
     let numMembers = allMembers.length;
-    let eachUserBalance = {};
-    let payments = {}; // payments["charles"] = [["cryptoboid", 10]]
+    let eachUserBalance: Record<string, number> = {};
+    let payments: Record<string, Array<[string, number]>> = {}; // payments["charles"] = [["cryptoboid", 10]]
 
     for (const member of allMembers) { // if (member[1] === NaN) return {};
         eachUserBalance[member[0]] = 0;
@@ -44,12 +49,14 @@ export function computeBalances(allExpensesObject, allMembers, allDonePaymentsOb
     return Object.entries(eachUserBalance).sort((a, b) => b[1] - a[1]);
 }
 
-export function computePayments(balance: [string, unknown][]): any {
-    let sortedMostGenerous = balance.map((x) => Array.from(x));
+export function computePayments(
+	balance: [string, number][]
+): Record<string, Array<[string, number]>> {
+    let sortedMostGenerous = balance.map((x) => Array.from(x) as [string, number]);
     let currMostGen = 0,
         currLeastGen = sortedMostGenerous.length - 1;
 
-    let result = {};
+    let result: Record<string, Array<[string, number]>> = {};
 
     for (const member of sortedMostGenerous) {
         result[member[0]] = [];
@@ -93,7 +100,7 @@ export function recordPayment(payerName: string, receiverName: string, payedAmou
     const bothExist = payerName in groupStoreRef.members && receiverName in groupStoreRef.members;
     if (!bothExist) throw SyntaxError;
     setSecure(
-        get(groupDB).get('payments'),
+        get(groupDB)!.get('payments'),
         {
             paidBy: payerName,
             receivedBy: receiverName,
@@ -105,14 +112,16 @@ export function recordPayment(payerName: string, receiverName: string, payedAmou
 }
 
 function removeExpense(key: string) {
-    get(groupDB).get('expenses').get(key).put(null);
+    // @ts-expect-error
+    get(groupDB)!.get('expenses').get(key).put(null);
 };
 
 function removePayment(key: string) {
-    get(groupDB).get('payments').get(key).put(null);
+    // @ts-expect-error
+    get(groupDB)!.get('payments').get(key).put(null);
 };
 
-export function removeTransaction(key: string, transaction: object) {
-    if (transaction.title) removeExpense(key);
+export function removeTransaction(key: string, transaction: Transaction) {
+    if ('title' in transaction) removeExpense(key);
     else removePayment(key);
 }

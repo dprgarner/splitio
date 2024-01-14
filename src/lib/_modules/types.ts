@@ -1,10 +1,45 @@
-enum GroupNodeStates {
-    Found = "FOUND",
-    Unknown = "UNKNOWN",
-    NotFound = "NotFound",
-    Error = "ERROR",
+export enum GroupNodeState {
+	Found = "FOUND",
+	Unknown = "UNKNOWN",
+	NotFound = "NotFound",
+	Error = "ERROR"
+}
+
+export type Expense = {
+	amount: number;
+	paidBy: string;
+	timestamp: number;
+	title: number;
 };
 
-export {
-    GroupNodeStates
+export type Payment = {
+	amount: number;
+	paidBy: string;
+	receivedBy: string;
+	timestamp: number;
 };
+
+export type Transaction = Expense | Payment
+
+export type Member = {
+	name: string;
+};
+
+export type GroupInfo = {
+	name: string;
+	currency?: string;
+}
+
+export type GroupStore = {
+	expenses: Record<string, Expense>;
+	payments: Record<string, Payment>;
+	members: Record<string, Member>;
+	groupInfo: GroupInfo;
+	groupNotes: string;
+};
+
+export type RecentGroup = {
+	groupId: string;
+	groupName: string;
+	secretKey: string;
+}
