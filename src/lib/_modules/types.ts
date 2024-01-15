@@ -9,11 +9,19 @@ export enum GroupNodeState {
 	Error = "ERROR"
 }
 
+export enum SplitType {
+	Share = "SHARE",
+	Percent = "PERCENT",
+	Amount = "AMOUNT",
+}
+
 export type Expense = {
 	amount: number;
 	paidBy: string;
 	timestamp: number;
-	title: number;
+	title: string;
+	splitType?: SplitType,
+	splits?: Record<string, number>
 };
 
 export type Payment = {

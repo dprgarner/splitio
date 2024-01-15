@@ -153,17 +153,14 @@
 		);
 	});
 
-	const addExpense = async (expenseName: string, expenseAmount: number, memberName: string) => {
-		const memberExists = memberName in $groupStore.members;
+	const addExpense = async (
+		expense: Expense
+	) => {
+		const memberExists = expense.paidBy in $groupStore.members;
 		if (!memberExists) throw SyntaxError;
 		setSecure(
 			$groupDB!.get('expenses'),
-			{
-				title: expenseName,
-				amount: expenseAmount,
-				paidBy: memberName,
-				timestamp: Date.now()
-			},
+			expense,
 			$secretKey
 		);
 	};

@@ -15,7 +15,7 @@
 	let confirmDeleteTxKey: string;
 </script>
 
-<List twoLine avatarList>
+<List twoLine avatarList nonInteractive>
 	{#each transactions.slice(0, maxShownTx) as [key, transaction]}
 		<TransactionListItem
 			{transaction}

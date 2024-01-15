@@ -13,7 +13,7 @@
 	});
 </script>
 
-{#if recentGroups.length !== 0}
+{#if recentGroups && recentGroups.length !== 0}
 	<div in:slide={{ delay: 0, duration: 600 }}>
 		<Paper elevation={5} class="recent-paper">
 			<Title>🕐 recent groups</Title>
