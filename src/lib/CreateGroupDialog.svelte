@@ -10,7 +10,7 @@
 	export let openDialog: boolean;
 	export let addCallback: (name: string, currency: Currency) => void;
 
-	let inputName: string;
+	let inputName: string = '';
 
 	let options = Object.keys(CURRENCY_SYMBOLS) as Currency[]
 	let currency: Currency = 'USD'
